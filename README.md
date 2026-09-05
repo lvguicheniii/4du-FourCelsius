@@ -28,44 +28,68 @@
 - `community-web/`：浏览器客户端（Vite + React）
 - `server/`：REST API、WebSocket、SQLite 数据库和管理接口
 
-## 快速开始
+## 部署教程
 
-### 服务端
+### 方式一：本地部署（学习和局域网测试）
 
-```bash
+本地部署不需要云服务器。需要安装 Node.js 20+，服务端会使用本地 SQLite 数据库。
+
+#### 1. 启动服务端
+
+```powershell
 cd server
-cp .env.example .env
-npm ci
-npm start
-```
-
-服务端默认监听 `http://localhost:3001`。首次运行会创建本地数据库和管理员初始化提示。生产环境必须设置随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`，启用短信或其他真实验证服务，并通过反向代理提供 HTTPS。固定验证码仅适用于隔离的本地测试。
-
-### 网页端
-
-```bash
-cd community-web
-cp .env.example .env
+Copy-Item .env.example .env
 npm install
 npm run dev
 ```
 
-设置 `VITE_API_ORIGIN` 指向服务端地址。生产构建使用 `npm run build`。
+服务端默认地址为 `http://localhost:3001`。本地隔离测试可以在 `.env` 中使用固定验证码；不要将固定验证码用于公网部署。
 
-### App
+#### 2. 启动网页端
 
-```bash
+新开一个终端：
+
+```powershell
+cd community-web
+Copy-Item .env.example .env
+npm install
+npm run dev
+```
+
+网页端默认地址为 `http://localhost:5173`。本机访问服务端时，`.env` 中的 `VITE_API_ORIGIN` 保持 `http://localhost:3001` 即可。
+
+#### 3. 连接 App
+
+```powershell
 cd community-app
-cp .env.example .env
+Copy-Item .env.example .env
 npm install
 npx expo start
 ```
 
-设置 `EXPO_PUBLIC_API_URL` 指向服务端地址。正式 Android 构建需要本机 Android SDK、签名密钥和 HTTPS API；签名材料绝不提交到 Git。
+在 `community-app/.env` 中设置 `EXPO_PUBLIC_API_URL`：
 
-## 生产部署
+- Android 模拟器使用 `http://10.0.2.2:3001`
+- 同一局域网的真机使用电脑局域网 IP，例如 `http://192.168.1.20:3001`
+- 手机和电脑必须连接同一个局域网，并允许 Node.js 通过 Windows 专用网络防火墙
 
-请阅读 [`DEPLOYMENT.md`](./DEPLOYMENT.md)。其中的域名、凭据、COS 桶名和证书均由部署者自行配置，仓库不包含任何生产数据或密钥。
+本地部署只能被本机或局域网设备访问，不提供公网 HTTPS，不适合真实用户运营。
+
+### 方式二：云服务器部署（公网或生产环境）
+
+推荐 Ubuntu 22.04/24.04、Node.js 20+、SQLite、Nginx 和 HTTPS 域名。基本流程如下：
+
+```bash
+git clone https://github.com/lvguicheniii/4du-FourCelsius.git
+cd 4du-FourCelsius/server
+cp .env.example .env
+npm ci --omit=dev
+npm start
+```
+
+生产环境必须设置随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`，配置正确的 `CORS_ORIGINS`，关闭固定验证码，并通过 Nginx 或其他反向代理提供 HTTPS。网页端和 App 的 API 地址都应改为 HTTPS 域名。媒体存储、备份、推送和内容审核服务按实际需要配置，密钥只放在服务器环境变量中。
+
+完整的 Nginx、进程守护、数据库备份和 App 构建说明请阅读 [`DEPLOYMENT.md`](./DEPLOYMENT.md)。域名、凭据、COS 桶名和证书均由部署者自行配置，仓库不包含任何生产数据或密钥。
 
 ## 许可
 
