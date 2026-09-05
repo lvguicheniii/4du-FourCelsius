@@ -6,11 +6,11 @@
 
 以下截图展示移动端的主要页面与视觉风格。
 
-<p>
-  <img src="./docs/screenshots/app-feed.jpg" alt="APP 端浮霜带" width="240">
-  <img src="./docs/screenshots/app-reef.jpg" alt="APP 端隐海礁" width="240">
-  <img src="./docs/screenshots/app-messages.jpg" alt="APP 端消息页" width="240">
-  <img src="./docs/screenshots/app-profile.jpg" alt="APP 端个人主页" width="240">
+<p style="white-space: nowrap;">
+  <img src="./docs/screenshots/app-feed.jpg" alt="APP 端浮霜带" width="180">
+  <img src="./docs/screenshots/app-reef.jpg" alt="APP 端隐海礁" width="180">
+  <img src="./docs/screenshots/app-messages.jpg" alt="APP 端消息页" width="180">
+  <img src="./docs/screenshots/app-profile.jpg" alt="APP 端个人主页" width="180">
 </p>
 
 ## 网页端
