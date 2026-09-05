@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="480" viewBox="0 0 1200 480">
+  <rect width="1200" height="480" fill="none"/>
+  <text x="600" y="220" text-anchor="middle" fill="#33A9DC"
+        font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif"
+        font-size="58" font-style="italic" font-weight="500">“凡真实的人生，皆为相遇。”</text>
+  <text x="1015" y="315" text-anchor="end" fill="#6F8794"
+        font-family="Microsoft YaHei, PingFang SC, Noto Sans CJK SC, sans-serif"
+        font-size="28" font-weight="400">——马丁·布伯《我与你》</text>
+</svg>

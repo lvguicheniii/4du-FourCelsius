@@ -1,0 +1,107 @@
+{
+  "expo": {
+    "name": "肆度",
+    "slug": "community-app",
+    "version": "1.1",
+    "orientation": "portrait",
+    "icon": "./4dulogo.png",
+    "scheme": "communityapp",
+    "userInterfaceStyle": "automatic",
+    "backgroundColor": "#F5F6FA",
+    "runtimeVersion": "1.0.0",
+    "updates": {
+      "enabled": true,
+      "checkAutomatically": "ON_ERROR_RECOVERY",
+      "fallbackToCacheTimeout": 0,
+      "url": "http://localhost:3001/api/app-updates/ota",
+      "requestHeaders": {
+        "expo-channel-name": "production"
+      }
+    },
+    "ios": {
+      "icon": "./4dulogo.png",
+      "bundleIdentifier": "com.fourcelsius.sidu",
+      "buildNumber": "3",
+      "entitlements": {
+        "keychain-access-groups": [
+          "$(AppIdentifierPrefix)com.fourcelsius.sidu"
+        ]
+      },
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "versionCode": 15,
+      "permissions": [
+        "android.permission.REQUEST_INSTALL_PACKAGES"
+      ],
+      "blockedPermissions": [
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.READ_MEDIA_AUDIO"
+      ],
+      "usesCleartextTraffic": false,
+      "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/images/4dulogo-adaptive-foreground.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "package": "com.fourcelsius.sidu"
+    },
+    "web": {
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-dev-client",
+        {
+          "launchMode": "most-recent"
+        }
+      ],
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#F4F9FC",
+          "image": "./assets/images/splash-transparent.png",
+          "imageWidth": 1,
+          "resizeMode": "contain",
+          "dark": {
+            "backgroundColor": "#101820",
+            "image": "./assets/images/splash-transparent.png"
+          }
+        }
+      ],
+      "expo-sharing",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": false
+          }
+        }
+      ],
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/achievement-notification-icon.png",
+          "color": "#33A9DC",
+          "defaultChannel": "sidu-social"
+        }
+      ],
+      "expo-web-browser",
+      "expo-video"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "router": {}
+    }
+  }
+}

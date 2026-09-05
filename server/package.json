@@ -1,0 +1,42 @@
+{
+  "name": "sidu-server",
+  "version": "1.0.0",
+  "description": "肆度社区后端服务",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "build:admin-pages": "node scripts/build-admin-pages.mjs",
+    "test": "node --test test/*.test.js",
+    "load-test:500": "node scripts/load-test-500.js",
+    "backup": "node backup.js",
+    "backup:verify": "node verify-backup.js",
+    "backup:restore-drill": "node restore-drill.js",
+    "ops:check": "node ops-health-check.js",
+    "smoke:media": "node scripts/smoke-video-policy.js && node scripts/smoke-motion-photo.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.0.0",
+    "cors": "^2.8.5",
+    "cos-nodejs-sdk-v5": "3.0.0",
+    "dotenv": "^16.4.0",
+    "express": "^4.21.0",
+    "ffmpeg-static": "^5.3.0",
+    "ffprobe-static": "^3.1.0",
+    "ip2region": "2.3.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "sharp": "0.35.3",
+    "tencentcloud-sdk-nodejs-captcha": "^4.1.191",
+    "tencentcloud-sdk-nodejs-ims": "^4.1.271",
+    "tencentcloud-sdk-nodejs-sms": "^4.1.304",
+    "tencentcloud-sdk-nodejs-tms": "^4.1.271",
+    "uuid": "^11.1.1",
+    "ws": "^8.21.0"
+  },
+  "overrides": {
+    "qs": "^6.16.0",
+    "uuid": "$uuid"
+  }
+}

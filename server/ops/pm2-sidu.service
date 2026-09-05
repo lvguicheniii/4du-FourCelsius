@@ -1,0 +1,41 @@
+[Unit]
+Description=肆度 Node.js service managed by PM2
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=forking
+User=sidu
+Group=sidu
+Environment=NODE_ENV=production
+Environment=PM2_HOME=/var/lib/sidu/.pm2
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PIDFile=/var/lib/sidu/.pm2/pm2.pid
+ExecStart=/usr/bin/pm2 startOrReload /opt/sidu/ecosystem.config.cjs --env production
+ExecReload=/usr/bin/pm2 reload /opt/sidu/ecosystem.config.cjs --env production
+ExecStop=/usr/bin/pm2 kill
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=30
+TimeoutStopSec=20
+LimitNOFILE=65535
+TasksMax=512
+UMask=0027
+
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+CapabilityBoundingSet=
+AmbientCapabilities=
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=/opt/sidu/src/data /opt/sidu/uploads /opt/sidu/backups /opt/sidu/.cache /opt/sidu/tmp /var/lib/sidu/.pm2 /var/log/sidu
+
+[Install]
+WantedBy=multi-user.target

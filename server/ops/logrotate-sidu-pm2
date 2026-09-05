@@ -1,0 +1,11 @@
+/var/lib/sidu/.pm2/logs/sidu-out.log /var/lib/sidu/.pm2/logs/sidu-error.log /var/lib/sidu/.pm2/pm2.log /var/log/sidu/*.log {
+  daily
+  rotate 14
+  size 10M
+  missingok
+  notifempty
+  compress
+  delaycompress
+  copytruncate
+  create 0640 sidu sidu
+}

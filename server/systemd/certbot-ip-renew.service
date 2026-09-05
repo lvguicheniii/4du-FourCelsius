@@ -1,0 +1,9 @@
+[Unit]
+Description=Renew the short-lived Let's Encrypt certificate for the Sidu API IP
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot renew --quiet --no-random-sleep-on-renew
+ExecStartPost=/usr/bin/systemctl reload nginx

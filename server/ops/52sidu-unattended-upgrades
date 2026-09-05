@@ -1,0 +1,9 @@
+Unattended-Upgrade::Allowed-Origins {
+    "${distro_id}:${distro_codename}-security";
+    "${distro_id}ESMApps:${distro_codename}-apps-security";
+    "${distro_id}ESM:${distro_codename}-infra-security";
+};
+
+// Never reboot a production server automatically. A reboot is scheduled
+// explicitly after service and application checks.
+Unattended-Upgrade::Automatic-Reboot "false";

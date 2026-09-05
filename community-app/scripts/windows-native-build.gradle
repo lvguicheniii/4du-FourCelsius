@@ -1,0 +1,11 @@
+// Keep CMake output paths short even when dependencies use pnpm's nested store.
+gradle.beforeProject { project ->
+    project.afterEvaluate {
+        def android = project.extensions.findByName('android')
+        def stagingRoot = System.getenv('SIDU_CMAKE_STAGING_ROOT')
+        if (android != null && stagingRoot && android.externalNativeBuild.cmake.path != null) {
+            android.externalNativeBuild.cmake.buildStagingDirectory = new File(stagingRoot, project.name)
+            android.defaultConfig.externalNativeBuild.cmake.arguments '-DCMAKE_SUPPRESS_REGENERATION=ON'
+        }
+    }
+}
