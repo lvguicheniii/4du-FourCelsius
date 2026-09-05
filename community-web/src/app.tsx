@@ -19,7 +19,6 @@ import logoNight from "../../community-app/assets/images/logo_night.png";
 import { LEGAL_DOCUMENTS } from "../../community-app/src/data/legal-documents";
 import {
   AccountScreen,
-  AboutScreen,
   AchievementsScreen,
   BlockedScreen,
   BoardsScreen,
@@ -183,7 +182,8 @@ export function App() {
   };
   const content = useMemo(() => {
     if (root === "home") return <HomeScreen navigate={navigate} requireLogin={requireLogin} theme={theme} />;
-    if (root === "about") return <AboutScreen theme={theme} />;
+    // The public edition intentionally has no private/company profile page.
+    if (root === "about") return <FeedScreen navigate={navigate} requireLogin={requireLogin} />;
     if (root === "feed")
       return (
         <FeedScreen
@@ -289,8 +289,8 @@ export function App() {
   if (banned && !(root === "notifications" && parts[1] === "system")) {
     return <BannedAccountView user={user} onNotifications={() => navigate("notifications/system")} onLogout={() => void logout()} />;
   }
-  const isFullWidthPage = root === "home" || root === "about";
-  const isCommunityRoute = root !== "home" && root !== "about";
+  const isFullWidthPage = root === "home";
+  const isCommunityRoute = root !== "home";
   return (
     <>
       <SiteTopbar
@@ -298,7 +298,6 @@ export function App() {
         user={user}
         root={root}
         communityActive={isCommunityRoute}
-        aboutActive={root === "about"}
         navigate={navigate}
         requireLogin={requireLogin}
         onLogin={() => setLogin(true)}
@@ -516,7 +515,6 @@ function SiteTopbar({
   user,
   root,
   communityActive,
-  aboutActive,
   navigate,
   requireLogin,
   onLogin,
@@ -527,7 +525,6 @@ function SiteTopbar({
   user: any;
   root: string;
   communityActive: boolean;
-  aboutActive: boolean;
   navigate: (route: string) => void;
   requireLogin: () => boolean;
   onLogin: () => void;
@@ -550,9 +547,6 @@ function SiteTopbar({
           </button>
           <button className={cx("site-nav-link", communityActive && "active")} onClick={() => navigate("feed/recommend")}>
             社区
-          </button>
-          <button className={cx("site-nav-link", aboutActive && "active")} onClick={() => navigate("about")}>
-            关于我们
           </button>
         </nav>
         <div className="site-actions">

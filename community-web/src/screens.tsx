@@ -13,7 +13,6 @@ import {
   ArrowUp,
   Bookmark,
   Boxes,
-  Building2,
   Camera,
   Check,
   ChevronLeft,
@@ -584,114 +583,6 @@ export function HomeScreen({ navigate, requireLogin, theme }: { navigate: Naviga
         <button className="home-primary-action" onClick={() => navigateFromHome("feed/recommend")}>进入肆度</button>
       </section>
     </div>
-  );
-}
-
-export function AboutScreen({ theme }: { theme: "light" | "dark" }) {
-  const pageRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const elements = Array.from(
-      pageRef.current?.querySelectorAll<HTMLElement>("[data-about-reveal]") ?? [],
-    );
-    if (!elements.length) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      elements.forEach((element) => element.classList.add("is-visible"));
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-      },
-      { rootMargin: "0px 0px -8%", threshold: 0.12 },
-    );
-
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-
-  return (
-    <main ref={pageRef} className="about-page">
-      <section className="about-intro">
-        <div className="about-intro-mark about-reveal about-reveal-mark" data-about-reveal aria-hidden="true">
-          <span className="about-temperature-mark">
-            <span className="about-temperature-number">4</span>
-            <span className="about-temperature-unit">°C</span>
-          </span>
-          <i />
-        </div>
-        <div className="about-intro-copy">
-          <span className="about-kicker about-reveal about-reveal-delay-1" data-about-reveal>关于肆度 · ABOUT 4DU</span>
-          <h1>
-            <span className="about-line-mask">
-              <span className="about-title-line about-reveal about-reveal-delay-2" data-about-reveal>给每一种真实，</span>
-            </span>
-            <span className="about-line-mask">
-              <em className="about-title-line about-reveal about-reveal-delay-3" data-about-reveal>留一处可以停留的低温。</em>
-            </span>
-          </h1>
-          <p className="about-standfirst">
-            <span className="about-standfirst-line about-reveal about-reveal-delay-4" data-about-reveal>NOESIS，做的是互联网产品，想留下的却不只是一个产品。</span>
-            <span className="about-standfirst-line about-reveal about-reveal-delay-5" data-about-reveal>我们相信，人与人之间的靠近，不一定要从喧闹开始；</span>
-            <span className="about-standfirst-line about-reveal about-reveal-delay-6" data-about-reveal>有时，一句轻轻放下的话，就足以让另一个人知道，自己并不孤单。</span>
-          </p>
-        </div>
-      </section>
-
-      <section className="about-story-grid">
-        <div className="about-story-label about-reveal" data-about-reveal>
-          <span>01</span>
-          <span>我们是谁</span>
-        </div>
-        <article className="about-story-block about-reveal about-reveal-delay-1" data-about-reveal>
-          <Building2 size={22} strokeWidth={1.5} aria-hidden="true" />
-          <h2>把技术做得有人情味。</h2>
-          <p>
-            NOESIS是一家扎根厦门的科技公司。我们关心技术如何抵达日常，也关心它抵达之后，是否让人更自在一点。我们不追逐把所有人带向同一个方向，而是希望把选择权、表达欲和那一点不愿被打扰的安静，交还给每个人。
-          </p>
-        </article>
-        <article className="about-story-block about-story-block-accent about-reveal about-reveal-delay-2" data-about-reveal>
-          <span className="about-quote-mark" aria-hidden="true">“</span>
-          <p className="about-quote">
-            真正的连接，不是把彼此变得相同，<br />而是允许不同的人，在同一片海里呼吸。
-          </p>
-          <span className="about-quote-source">肆度的起点</span>
-        </article>
-      </section>
-
-      <section className="about-story-grid about-origin-grid">
-        <div className="about-story-label about-reveal" data-about-reveal>
-          <span>02</span>
-          <span>为什么是肆度</span>
-        </div>
-        <article className="about-origin-copy about-reveal about-reveal-delay-1" data-about-reveal>
-          <h2>我们想做一个，<br /><em>不用表演也能相遇的地方。</em></h2>
-          <p>
-            这个念头，来自许多很普通的时刻：下班回家的路上，凌晨还亮着的窗，想说些什么却又删掉的对话框。人总有一些情绪，既不适合大声宣布，也不该被匆忙归类。于是我们做了肆度，把每一次表达做成一枚切片，让它先在自己的温度里安静地存在，再去遇见恰好能够读懂它的人。
-          </p>
-          <p>
-            “肆”是松弛、坦诚，也是给自己留一点余地；“度”是分寸、温度，是靠近时不越界的体谅。我们希望这里有热烈，也有克制；有陌生人的回应，也有一个人独处时的安全感。你可以说完就走，也可以在一段对话里多停留一会儿。
-          </p>
-        </article>
-        <div className="about-origin-note about-reveal about-reveal-delay-2" data-about-reveal>
-          <span className="about-note-line" aria-hidden="true" />
-          <p>不必成为更好的人，<br />先成为此刻的自己。</p>
-          <span>4DU / 2026</span>
-        </div>
-      </section>
-
-      <section className="about-closing about-reveal" data-about-reveal>
-        <img src={theme === "dark" ? logoNight : logoDay} alt="肆度" />
-        <p>愿每一次表达，都有被温柔接住的可能。</p>
-        <span>NOESIS · 肆度</span>
-      </section>
-    </main>
   );
 }
 
