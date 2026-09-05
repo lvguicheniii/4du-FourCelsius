@@ -2,6 +2,26 @@
 
 肆度（Four Celsius）是一个开源社区项目，包含 Expo/React Native App、React 网页端和 Node.js 服务端。项目用于学习、研究和自托管部署。
 
+## APP 端
+
+以下截图展示移动端的主要页面与视觉风格。
+
+<p>
+  <img src="./docs/screenshots/app-feed.jpg" alt="APP 端浮霜带" width="240">
+  <img src="./docs/screenshots/app-reef.jpg" alt="APP 端隐海礁" width="240">
+  <img src="./docs/screenshots/app-messages.jpg" alt="APP 端消息页" width="240">
+  <img src="./docs/screenshots/app-profile.jpg" alt="APP 端个人主页" width="240">
+</p>
+
+## 网页端
+
+以下截图展示浏览器端的首页与社区页面。
+
+<p>
+  <img src="./docs/screenshots/web-home.png" alt="网页端首页" width="620">
+  <img src="./docs/screenshots/web-community.png" alt="网页端社区" width="620">
+</p>
+
 ## 目录
 
 - `community-app/`：Android/iOS 客户端（Expo + React Native）
@@ -50,23 +70,3 @@ npx expo start
 ## 许可
 
 本项目按 MIT License 发布，详见 [`LICENSE`](./LICENSE)。部署者需自行遵守所在地区的法律法规、隐私和内容治理要求。
-
-## APP 端
-
-以下截图展示了移动端的主要页面与视觉风格。
-
-### 浮霜带
-
-![APP 端浮霜带](./docs/screenshots/app-feed.jpg)
-
-### 隐海礁
-
-![APP 端隐海礁](./docs/screenshots/app-reef.jpg)
-
-### 消息
-
-![APP 端消息页](./docs/screenshots/app-messages.jpg)
-
-### 个人主页
-
-![APP 端个人主页](./docs/screenshots/app-profile.jpg)
