@@ -4,7 +4,7 @@
 
 ## APP 端
 
-以下截图展示移动端的主要页面与视觉风格，图中账号、内容和媒体均为脱敏后的演示数据。
+以下截图展示项目真实部署后的移动端主要页面与视觉风格。
 
 <p style="white-space: nowrap;">
   <img src="./docs/screenshots/app-feed.jpg" alt="APP 端浮霜带" width="180">
@@ -15,7 +15,7 @@
 
 ## 网页端
 
-以下截图展示浏览器端的首页与社区页面，图中账号、内容和媒体均为脱敏后的演示数据。
+以下截图展示项目真实部署后的网页首页与社区页面。
 
 <p>
   <img src="./docs/screenshots/web-home.png" alt="网页端首页" width="620">
