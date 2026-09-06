@@ -41,7 +41,7 @@ type AndroidUpdateCheck = {
 };
 
 const ANDROID_EMBEDDED_OTA_MINIMUM_BUILD: Readonly<Record<string, number>> = {
-  '9a5b8e93-b95e-423b-b5d4-48d743160de3': 13,
+  '00000000-0000-4000-8000-000000000013': 13,
 };
 
 export function isAndroidOtaIncludedInNativeBuild(versionCode: number, updateId: string) {

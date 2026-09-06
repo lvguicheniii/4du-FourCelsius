@@ -46,5 +46,6 @@ test('production refuses weak JWT and default bootstrap administrator credential
   assert.match(source('src/lib/security-config.js'), /configuredJwtSecret\.length < 32/);
   const index = source('src/index.js');
   assert.match(index, /ADMIN_BOOTSTRAP_PASSWORD/);
-  assert.match(index, /bootstrapPassword\.length < 12/);
+  assert.match(index, /isProduction && bootstrapPassword\.length < 12/);
+  assert.match(index, /isProduction && usesPublishedLocalCredentials/);
 });

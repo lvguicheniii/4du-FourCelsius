@@ -6,7 +6,7 @@ const { baseVersionName, mergePublicUpdateLogs } = require('../lib/update-log-gr
 
 const DEFAULT_PUBLIC_ORIGIN = process.env.APP_UPDATE_PUBLIC_ORIGIN || 'http://localhost:3001';
 const ANDROID_EMBEDDED_OTA_MINIMUM_BUILD = Object.freeze({
-  '9a5b8e93-b95e-423b-b5d4-48d743160de3': 13,
+  '00000000-0000-4000-8000-000000000013': 13,
 });
 
 function isAndroidOtaIncludedInNativeBuild(versionCode, updateId) {

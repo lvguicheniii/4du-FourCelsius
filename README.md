@@ -4,7 +4,7 @@
 
 ## APP 端
 
-以下截图展示移动端的主要页面与视觉风格。
+以下截图展示移动端的主要页面与视觉风格，图中账号、内容和媒体均为脱敏后的演示数据。
 
 <p style="white-space: nowrap;">
   <img src="./docs/screenshots/app-feed.jpg" alt="APP 端浮霜带" width="180">
@@ -15,7 +15,7 @@
 
 ## 网页端
 
-以下截图展示浏览器端的首页与社区页面。
+以下截图展示浏览器端的首页与社区页面，图中账号、内容和媒体均为脱敏后的演示数据。
 
 <p>
   <img src="./docs/screenshots/web-home.png" alt="网页端首页" width="620">
@@ -70,7 +70,9 @@ npm install
 npm run dev
 ```
 
-首次启动会自动创建 SQLite 数据库。管理后台地址是 `http://localhost:3001/admin/`，账号为 `noesis`，一次性随机密码会显示在第一次启动的终端里。注册时填写任意格式正确且未使用的 11 位手机号，点击“填入验证码”会自动填写固定验证码 `252616`。这些默认值只可用于本机或隔离局域网测试；如需修改固定码，请同时修改 `server/.env` 的 `ACCOUNT_FIXED_CODE` 和 `community-web/.env` 的 `VITE_FIXED_VERIFICATION_CODE`。
+首次启动会自动创建 SQLite 数据库。管理后台地址是 `http://localhost:3001/admin/`，默认账号和密码均为 `noesis`。注册时填写任意格式正确且未使用的 11 位手机号，点击“填入验证码”会自动填写固定验证码 `252616`。
+
+> **重要：** `noesis / noesis` 仅用于本机或隔离局域网测试。首次登录后，请进入管理后台左侧的“管理人员”，在“当前账户设置”中修改登录 ID 和密码（新密码至少 12 位）。如需修改注册固定码，请同时修改 `server/.env` 的 `ACCOUNT_FIXED_CODE` 和 `community-web/.env` 的 `VITE_FIXED_VERIFICATION_CODE`。
 
 第二步，另开终端启动网页端：
 
@@ -117,7 +119,7 @@ npm ci --omit=dev
 npm start
 ```
 
-编辑 `.env`：设置随机 `JWT_SECRET`、`ADMIN_JWT_SECRET`，首次启动设置自定义管理员账号和至少 12 位密码，成功创建后移除 `ADMIN_BOOTSTRAP_*`；生产环境关闭固定验证码，配置 `CORS_ORIGINS`，通过 Nginx 提供 HTTPS。网页端和 App 的 API 地址必须使用 HTTPS，COS、推送、审核、备份等密钥只放在服务器环境变量中。
+编辑 `.env`：设置随机 `JWT_SECRET`、`ADMIN_JWT_SECRET`，将 `ADMIN_BOOTSTRAP_USERNAME` 和 `ADMIN_BOOTSTRAP_PASSWORD` 改为自定义管理员账号及至少 12 位的强密码，成功创建后移除 `ADMIN_BOOTSTRAP_*`；生产模式会拒绝默认的 `noesis / noesis`。同时关闭固定验证码、配置 `CORS_ORIGINS`，并通过 Nginx 提供 HTTPS。网页端和 App 的 API 地址必须使用 HTTPS，COS、推送、审核、备份等密钥只放在服务器环境变量中。
 
 完整的 Nginx、进程守护、数据库备份和 App 构建说明请阅读 [`DEPLOYMENT.md`](./DEPLOYMENT.md)。
 

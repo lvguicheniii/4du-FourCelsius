@@ -81,7 +81,7 @@ test('iOS checks the App Store instead of applying an in-app OTA', () => {
 
 test('Android build 13 treats DEV-070 as embedded while preserving future OTA checks', () => {
   const updaterSource = fs.readFileSync(path.join(__dirname, '../../community-app/src/lib/app-updater.ts'), 'utf8');
-  assert.match(updaterSource, /'9a5b8e93-b95e-423b-b5d4-48d743160de3': 13/);
+  assert.match(updaterSource, /'00000000-0000-4000-8000-000000000013': 13/);
   assert.match(updaterSource, /versionCode >= minimumBuild/);
   assert.match(updaterSource, /payload\.ota\.available[\s\S]*!isAndroidOtaIncludedInNativeBuild\(currentVersionCode\(\), latestOtaUpdateId\)/);
   assert.match(updaterSource, /Updates\.checkForUpdateAsync\(\)/);

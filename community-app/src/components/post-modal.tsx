@@ -93,7 +93,7 @@ export function PostDetailModal({ postId }: { postId: string }) {
   const sendComment = () => {
     const text = draft.trim();
     if (!text) return;
-    setExtraComments((prev) => [...prev, { id: `local-${Date.now()}`, postId: post.id, author: '吕归尘', avatarColor: '#33A9DC', time: '刚刚', content: text, likes: 0 }]);
+    setExtraComments((prev) => [...prev, { id: `local-${Date.now()}`, postId: post.id, author: '示例用户', avatarColor: '#33A9DC', time: '刚刚', content: text, likes: 0 }]);
     setDraft('');
   };
 

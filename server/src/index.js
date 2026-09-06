@@ -1,5 +1,4 @@
 require('dotenv').config();
-const crypto = require('node:crypto');
 const express = require('express');
 const http = require('http');
 const cors = require('cors');
@@ -221,22 +220,24 @@ app.use((error, req, res, next) => {
   if (!admin) {
     const isProduction = process.env.NODE_ENV === 'production';
     const bootstrapUsername = String(process.env.ADMIN_BOOTSTRAP_USERNAME || (isProduction ? '' : 'noesis')).trim();
-    let bootstrapPassword = String(process.env.ADMIN_BOOTSTRAP_PASSWORD || '');
-    const generatedPassword = !bootstrapPassword && !isProduction;
-    if (generatedPassword) bootstrapPassword = crypto.randomBytes(18).toString('base64url');
-    if (bootstrapUsername.length < 3 || bootstrapUsername.length > 64 || bootstrapPassword.length < 12 || bootstrapPassword.length > 128) {
+    const bootstrapPassword = String(process.env.ADMIN_BOOTSTRAP_PASSWORD || (isProduction ? '' : 'noesis'));
+    const usesPublishedLocalCredentials = bootstrapUsername === 'noesis' && bootstrapPassword === 'noesis';
+    const invalidPasswordLength = bootstrapPassword.length > 128
+      || (isProduction && bootstrapPassword.length < 12)
+      || (!isProduction && bootstrapPassword.length < 6);
+    if (bootstrapUsername.length < 3 || bootstrapUsername.length > 64 || invalidPasswordLength || (isProduction && usesPublishedLocalCredentials)) {
       console.error(isProduction
-        ? '未创建超级管理员：生产环境必须设置 3-64 位 ADMIN_BOOTSTRAP_USERNAME 和 12-128 位 ADMIN_BOOTSTRAP_PASSWORD'
-        : '未创建超级管理员：请设置有效的 ADMIN_BOOTSTRAP_PASSWORD，或保持为空以生成一次性本地测试密码');
+        ? '未创建超级管理员：生产环境必须设置自定义的 3-64 位 ADMIN_BOOTSTRAP_USERNAME 和 12-128 位 ADMIN_BOOTSTRAP_PASSWORD'
+        : '未创建超级管理员：本地管理员密码必须为 6-128 位');
       return;
     }
     const id = uuid();
     const hash = bcrypt.hashSync(bootstrapPassword, 10);
     db.prepare(`INSERT INTO users (id, username, password_hash, nickname, role, status)
       VALUES (?, ?, ?, '超级管理员', 'superadmin', 'active')`).run(id, bootstrapUsername, hash);
-    if (generatedPassword) {
-      console.warn(`本地超级管理员已创建: ${bootstrapUsername}`);
-      console.warn(`一次性初始密码（仅显示本次，请立即登录后修改）: ${bootstrapPassword}`);
+    if (usesPublishedLocalCredentials) {
+      console.warn('本地超级管理员已创建：noesis / noesis');
+      console.warn('该凭据仅用于本地测试，请登录后立即修改登录 ID 和密码');
     } else {
       console.log(`超级管理员已创建: ${bootstrapUsername}`);
     }

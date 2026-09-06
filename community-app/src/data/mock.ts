@@ -134,8 +134,8 @@ export const seedChats: Record<string, ChatMessage[]> = {
 };
 
 export const currentUser = {
-  name: '吕归尘',
-  uid: '10247835',
+  name: '示例用户',
+  uid: '1000001',
   avatarColor: '#33A9DC',
   bio: '这个人很懒，什么都没写',
   coverImage: 'https://picsum.photos/seed/cover1/800/300',
@@ -168,7 +168,7 @@ export const tagCategories = [
   },
   {
     title: '钝角',
-    tags: ['嘉豪', '神原玩家', '纳垢', 'ikun', 'popoA5', '0', '1', '叮咚鸡', '大狗叫', '咕咕嘎嘎'],
+    tags: ['随缘', '神原玩家', '纳垢', 'ikun', '碎碎念', '0', '1', '叮咚鸡', '大狗叫', '咕咕嘎嘎'],
   },
 ] as const;
 

@@ -127,7 +127,7 @@ test('Android update manifest exposes native and OTA availability in one fast re
 });
 
 test('native build 13 and newer treat DEV-070 as embedded', () => {
-  const dev070 = '9a5b8e93-b95e-423b-b5d4-48d743160de3';
+  const dev070 = '00000000-0000-4000-8000-000000000013';
   assert.equal(isAndroidOtaIncludedInNativeBuild(12, dev070), false);
   assert.equal(isAndroidOtaIncludedInNativeBuild(13, dev070), true);
   assert.equal(isAndroidOtaIncludedInNativeBuild(14, dev070), true);

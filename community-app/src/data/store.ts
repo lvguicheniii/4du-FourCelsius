@@ -135,7 +135,7 @@ const mutualPairs = new Set<string>();
 const NAME_TO_UID: Record<string, string> = {
   '山间清风': '10234567', '深夜干饭人': '10289123', 'Tech小王': '10345678',
   '一只咸鱼': '10412001', '阅读记录本': '10567890', '路人甲': '10654321',
-  '吕归尘': '10247835',
+  '示例用户': '1000001',
   '系统通知': '10000000', '背包客小李': '10789012', '在路上': '10890123',
   '摄影穷三代': '10901234', '干饭魂': '11012345', '过路的': '11123456',
   '数码羊毛党': '11234567', '峡谷养老院': '11345678', '书虫一枚': '11456789',
@@ -189,10 +189,10 @@ export function isMutuallyHidden(nameA: string, nameB: string) {
 export function setBlocked(name: string, blocked: boolean) {
   if (blocked) {
     blockedUsers[name] = true;
-    mutualPairs.add(pairKey(getUid('吕归尘'), getUid(name)));
+    mutualPairs.add(pairKey(getUid('示例用户'), getUid(name)));
   } else {
     delete blockedUsers[name];
-    mutualPairs.delete(pairKey(getUid('吕归尘'), getUid(name)));
+    mutualPairs.delete(pairKey(getUid('示例用户'), getUid(name)));
   }
   bump();
 }

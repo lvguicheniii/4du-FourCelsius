@@ -32,8 +32,12 @@ PORT=3001
 SIDU_BIND_ADDRESS=127.0.0.1
 JWT_SECRET=请生成至少32字节的随机值
 ADMIN_JWT_SECRET=请生成另一组至少32字节的随机值
+ADMIN_BOOTSTRAP_USERNAME=请设置自定义管理员账号
+ADMIN_BOOTSTRAP_PASSWORD=请设置至少12位的强密码
 CORS_ORIGINS=https://你的网页域名
 ```
+
+生产环境不能使用公开的本地默认凭据 `noesis / noesis`，服务端会拒绝用这组凭据创建超级管理员。首次登录后可在“管理人员”页面的“当前账户设置”中继续修改登录 ID 和密码。
 
 媒体上传可选用腾讯云 COS。只使用权限最小化的子账号，并把密钥仅放在服务器 `.env` 中。短信、验证码和内容审核服务均为可选配置；未配置时应保持对应功能关闭。
 
