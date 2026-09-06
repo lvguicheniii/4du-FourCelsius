@@ -35,7 +35,7 @@ function withVerificationEnvironment(values, callback) {
   }
 }
 
-test('archived personal-use account verification defaults to the fixed 000000 code', () => {
+test('local account verification defaults to the fixed 252616 code', () => {
   withVerificationEnvironment({
     ACCOUNT_VERIFICATION_MODE: undefined,
     ACCOUNT_FIXED_CODE: undefined,
@@ -43,10 +43,10 @@ test('archived personal-use account verification defaults to the fixed 000000 co
     REGISTRATION_FIXED_CODE: undefined,
   }, () => {
     assert.equal(verification.usesFixedVerificationCode(), true);
-    assert.equal(verification.fixedVerificationCode(), '000000');
-    assert.equal(verification.verifyFixedVerificationCode('000000'), true);
+    assert.equal(verification.fixedVerificationCode(), '252616');
+    assert.equal(verification.verifyFixedVerificationCode('252616'), true);
     assert.throws(
-      () => verification.verifyFixedVerificationCode('000000'),
+      () => verification.verifyFixedVerificationCode('000001'),
       error => error?.code === 'VERIFICATION_CODE_INVALID' && error?.status === 400,
     );
   });

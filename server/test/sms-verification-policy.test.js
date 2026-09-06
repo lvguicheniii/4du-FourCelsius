@@ -28,5 +28,5 @@ test('SMS codes are random, hashed, purpose-bound, expiring, and attempt-limited
   assert.match(smsService, /CODE_TTL_MS = 5 \* 60 \* 1000/);
   assert.match(smsService, /MAX_ATTEMPTS = 5/);
   assert.match(smsService, /phone_hash=\? AND purpose=\? AND status='active'/);
-  assert.doesNotMatch(smsService, /000000/);
+  assert.doesNotMatch(smsService, /252616/);
 });

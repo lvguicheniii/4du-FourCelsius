@@ -3128,7 +3128,7 @@ export function AccountScreen() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
         </label>
-        <label className="auth-code">固定验证码<span><input inputMode="numeric" maxLength={6} value={verifyCode} onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, ""))} placeholder="固定验证码 000000"/><button type="button" disabled={!user?.phone} onClick={async () => { setError(""); try { const result = await api.sendCode(user.phone, "password_change"); setVerifyCode(String(result.fixedCode || "000000")); } catch (e: any) { setError(e.message || "获取失败"); } }}>填入验证码</button></span></label>
+        <label className="auth-code">固定验证码<span><input inputMode="numeric" maxLength={6} value={verifyCode} onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, ""))} placeholder="固定验证码 252616"/><button type="button" disabled={!user?.phone} onClick={async () => { setError(""); try { const result = await api.sendCode(user.phone, "password_change"); setVerifyCode(String(result.fixedCode || "252616")); } catch (e: any) { setError(e.message || "获取失败"); } }}>填入验证码</button></span></label>
         {error && <p className="error">{error}</p>}
         <button
           className="primary"

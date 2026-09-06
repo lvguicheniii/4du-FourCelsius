@@ -26,7 +26,7 @@ test('sensitive account changes retain current-password checks in fixed-code mod
   assert.match(authRoutes, /await comparePassword\(current_password, user\.password_hash\)/);
   assert.match(authRoutes, /usesFixedVerificationCode\(\)\) verifyFixedVerificationCode\(verify_code\)/);
   assert.match(authRoutes, /else verifyAndConsumeCode\(\{ phone: user\.phone, purpose: 'password_change', code: verify_code \}\)/);
-  assert.doesNotMatch(authRoutes, /000000/);
+  assert.doesNotMatch(authRoutes, /252616/);
   assert.doesNotMatch(smsService, /000000/);
 });
 

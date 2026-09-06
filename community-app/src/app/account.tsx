@@ -40,7 +40,7 @@ export default function AccountScreen() {
     setPwCodeSending(true);
     try {
       const result = await sendCode(phone, 'password_change');
-      const fixedCode = String(result.fixedCode || '000000');
+      const fixedCode = String(result.fixedCode || '252616');
       setPwCode(fixedCode);
       Alert.alert('修改密码验证码', `当前固定验证码为 ${fixedCode}，已自动填入。`);
     } catch (error: any) {
@@ -53,7 +53,7 @@ export default function AccountScreen() {
   const handleChangePw = async () => {
     if (newPw.length < 10) return Alert.alert('提示', '密码至少10位');
     if (!currentPw) return Alert.alert('提示', '请输入当前密码');
-    if (!/^\d{6}$/.test(pwCode)) return Alert.alert('提示', '请输入固定验证码 000000');
+    if (!/^\d{6}$/.test(pwCode)) return Alert.alert('提示', '请输入固定验证码 252616');
     setPwSaving(true);
     try {
       const result = await changePassword({
@@ -125,11 +125,11 @@ export default function AccountScreen() {
         <View style={styles.modalOverlay}>
           <View style={[styles.modalBox, { backgroundColor: colors.card }]}>
             <Text style={[styles.modalTitle, { color: colors.text }]}>修改密码</Text>
-            <Text style={{ fontSize: 13, color: colors.textMuted, marginBottom: 8 }}>当前固定验证码为 000000</Text>
+            <Text style={{ fontSize: 13, color: colors.textMuted, marginBottom: 8 }}>当前固定验证码为 252616</Text>
             <TextInput style={[styles.modalInput, { color: colors.text, backgroundColor: colors.input }]} placeholder="当前密码" placeholderTextColor={colors.textMuted} secureTextEntry value={currentPw} onChangeText={setCurrentPw} />
             <TextInput style={[styles.modalInput, { color: colors.text, backgroundColor: colors.input }]} placeholder="新密码（至少10位）" placeholderTextColor={colors.textMuted} secureTextEntry value={newPw} onChangeText={setNewPw} />
             <View style={[styles.codeRow, { backgroundColor: colors.input }]}>
-              <TextInput style={[styles.codeInput, { color: colors.text }]} placeholder="固定验证码 000000" placeholderTextColor={colors.textMuted} keyboardType="number-pad" maxLength={6} value={pwCode} onChangeText={value => setPwCode(value.replace(/\D/g, ''))} />
+              <TextInput style={[styles.codeInput, { color: colors.text }]} placeholder="固定验证码 252616" placeholderTextColor={colors.textMuted} keyboardType="number-pad" maxLength={6} value={pwCode} onChangeText={value => setPwCode(value.replace(/\D/g, ''))} />
               <Pressable disabled={pwCodeSending} onPress={handleSendPasswordCode}>
                 <Text style={{ color: pwCodeSending ? colors.textMuted : colors.accent, fontSize: 13 }}>
                   {pwCodeSending ? '处理中...' : '填入验证码'}

@@ -1,12 +1,12 @@
 const crypto = require('crypto');
 
-const DEFAULT_FIXED_VERIFICATION_CODE = '000000';
+const DEFAULT_FIXED_VERIFICATION_CODE = '252616';
 
 function usesFixedVerificationCode() {
   return String(
     process.env.ACCOUNT_VERIFICATION_MODE
       || process.env.REGISTRATION_VERIFICATION_MODE
-      || 'fixed',
+      || (process.env.NODE_ENV === 'production' ? 'sms' : 'fixed'),
   ).trim().toLowerCase() === 'fixed';
 }
 

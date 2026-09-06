@@ -152,7 +152,7 @@ export default function LoginScreen() {
     try {
       const purpose = mode === 'register' ? 'register' : 'password_reset';
       const result = await sendCode(phone, purpose);
-      const fixedCode = String(result.fixedCode || '000000');
+      const fixedCode = String(result.fixedCode || '252616');
       setCode(fixedCode);
       Alert.alert(
         purpose === 'register' ? '注册验证码' : '找回密码验证码',
@@ -396,7 +396,7 @@ export default function LoginScreen() {
             <Ionicons name="shield-checkmark-outline" size={18} color={colors.textMuted} style={{ marginRight: 8 }} />
             <TextInput
               style={[styles.input, { color: colors.text }]}
-              placeholder="固定验证码 000000"
+              placeholder="固定验证码 252616"
               placeholderTextColor={colors.textMuted}
               keyboardType="number-pad"
               maxLength={6}
@@ -420,7 +420,7 @@ export default function LoginScreen() {
              !avatarUri ? '· 请上传头像' :
              !securityQuestionValid ? (customSecurityQuestionSelected ? '· 请输入自定义密保问题' : '· 请选择密保问题') :
              !securityA.trim() ? '· 请输入密保答案' :
-             code.length !== 6 ? '· 请输入固定验证码 000000' :
+             code.length !== 6 ? '· 请输入固定验证码 252616' :
              !agreed ? '· 请同意用户协议' : ''}
           </Text>
         )}
@@ -429,7 +429,7 @@ export default function LoginScreen() {
           <Text style={[styles.error, { color: colors.textMuted }]}>
             {!phoneValid ? '· 请输入正确的手机号' :
              password.length < 10 ? '· 新密码至少10位' :
-             code.length !== 6 ? '· 请输入固定验证码 000000' :
+             code.length !== 6 ? '· 请输入固定验证码 252616' :
              !agreed ? '· 请同意用户协议' : ''}
           </Text>
         )}

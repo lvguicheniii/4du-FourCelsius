@@ -43,9 +43,9 @@ npm install
 npm run dev
 ```
 
-编辑 `server/.env`，至少填写随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`，以及首次启动所需的 `ADMIN_BOOTSTRAP_USERNAME` 和 `ADMIN_BOOTSTRAP_PASSWORD`。管理员密码至少 12 位；首次成功创建管理员后，应删除这两个 `ADMIN_BOOTSTRAP_*` 变量并重启服务。服务端默认地址为 `http://localhost:3001`。
+编辑 `server/.env`，至少填写随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`。本地模板预填管理员账号 `noesis`，密码留空时会在首次启动日志中生成一次性随机密码；复制该密码登录后立即修改，然后删除或清空 `ADMIN_BOOTSTRAP_PASSWORD` 并重启服务。也可以自行填写一个至少 12 位的本地测试密码。服务端默认地址为 `http://localhost:3001`。
 
-本地隔离测试可以将 `ACCOUNT_VERIFICATION_MODE` 设为 `fixed` 并填写 `ACCOUNT_FIXED_CODE`；不要将固定验证码用于公网部署。未配置 COS 时，请按服务端当前配置使用本地媒体存储或关闭媒体功能。
+本地隔离测试默认使用固定验证码 `252616`（由 `.env.example` 配置）；不要将固定验证码用于公网部署。未配置 COS 时，请按服务端当前配置使用本地媒体存储或关闭媒体功能。
 
 #### 2. 启动网页端
 
@@ -97,7 +97,7 @@ npm ci --omit=dev
 npm start
 ```
 
-生产环境必须设置随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`，首次启动前设置并妥善保存 `ADMIN_BOOTSTRAP_USERNAME` 和 `ADMIN_BOOTSTRAP_PASSWORD`，成功创建管理员后立即移除引导变量。配置正确的 `CORS_ORIGINS`，关闭固定验证码，并通过 Nginx 或其他反向代理提供 HTTPS。网页端和 App 的 API 地址都应改为 HTTPS 域名。媒体存储、备份、推送和内容审核服务按实际需要配置，密钥只放在服务器环境变量中。
+生产环境必须设置随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`，并在首次启动前设置自定义的 `ADMIN_BOOTSTRAP_USERNAME` 和至少 12 位的 `ADMIN_BOOTSTRAP_PASSWORD`；成功创建管理员后立即移除引导变量。生产环境必须将 `ACCOUNT_VERIFICATION_MODE` 改为真实验证方式并清空固定验证码，配置正确的 `CORS_ORIGINS`，再通过 Nginx 或其他反向代理提供 HTTPS。网页端和 App 的 API 地址都应改为 HTTPS 域名。媒体存储、备份、推送和内容审核服务按实际需要配置，密钥只放在服务器环境变量中。
 
 完整的 Nginx、进程守护、数据库备份和 App 构建说明请阅读 [`DEPLOYMENT.md`](./DEPLOYMENT.md)。域名、凭据、COS 桶名和证书均由部署者自行配置，仓库不包含任何生产数据或密钥。
 
