@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Platform } from 'react-native';
+import { requireOptionalNativeModule } from 'expo';
 import { router } from 'expo-router';
 import Constants from 'expo-constants';
 import * as Device from 'expo-device';
-import { requireOptionalNativeModule } from 'expo-modules-core';
 import * as SecureStore from 'expo-secure-store';
 import { registerPushToken } from '@/api/client';
 import { useAuth } from '@/contexts/auth';

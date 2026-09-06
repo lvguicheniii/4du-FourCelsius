@@ -1,8 +1,8 @@
 import { Platform } from 'react-native';
+import { requireOptionalNativeModule } from 'expo';
 import * as Application from 'expo-application';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Linking from 'expo-linking';
-import { requireOptionalNativeModule } from 'expo-modules-core';
 import * as Updates from 'expo-updates';
 import { resolveApiUrl } from '@/api/client';
 import { APP_ERROR_CODES, PublicAppError } from '@/lib/app-error-codes';

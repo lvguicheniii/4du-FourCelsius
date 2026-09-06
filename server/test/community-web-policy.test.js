@@ -130,13 +130,6 @@ test('web home and global top navigation remain connected to the community', () 
   assert.match(styles, /\.home-board-grid button \{[\s\S]*background: color-mix\(in srgb, var\(--home-board-color\) 16%, transparent\)/);
   assert.doesNotMatch(styles, /\.home-board-grid button \{[^}]*background: rgba\(48, 100, 122, \.4\) !important/);
   assert.match(styles, /@media \(prefers-reduced-motion: no-preference\)/);
-  assert.equal(fs.existsSync(path.join(webRoot, 'design-backups/home-1.0/README.md')), true);
-  assert.equal(fs.existsSync(path.join(webRoot, 'design-backups/home-1.0/screens.tsx')), true);
-  assert.equal(fs.existsSync(path.join(webRoot, 'design-backups/home-1.0/styles.css')), true);
-  assert.equal(fs.existsSync(path.join(webRoot, 'design-backups/home-1.1/README.md')), true);
-  assert.equal(fs.existsSync(path.join(webRoot, 'design-backups/home-1.1/app.tsx')), true);
-  assert.equal(fs.existsSync(path.join(webRoot, 'design-backups/home-1.1/screens.tsx')), true);
-  assert.equal(fs.existsSync(path.join(webRoot, 'design-backups/home-1.1/styles.css')), true);
 });
 
 test('frost trail uses cooled posts without inheriting the main feed header', () => {

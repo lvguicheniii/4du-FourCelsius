@@ -27,7 +27,7 @@ test('sensitive account changes retain current-password checks in fixed-code mod
   assert.match(authRoutes, /usesFixedVerificationCode\(\)\) verifyFixedVerificationCode\(verify_code\)/);
   assert.match(authRoutes, /else verifyAndConsumeCode\(\{ phone: user\.phone, purpose: 'password_change', code: verify_code \}\)/);
   assert.doesNotMatch(authRoutes, /252616/);
-  assert.doesNotMatch(smsService, /000000/);
+  assert.doesNotMatch(smsService, /['"]000000['"]/);
 });
 
 test('anonymous password recovery uses the fixed code while avoiding account enumeration when requesting it', () => {

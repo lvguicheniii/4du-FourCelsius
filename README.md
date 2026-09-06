@@ -42,7 +42,15 @@ AI 可以协助执行命令和排查日志，但不会替你获得云账号、�
 
 ### 方式二：本地部署（学习和局域网测试）
 
-需要 Git、Node.js 22 LTS（推荐 22.13+）和 npm。Node.js 24 可能无法编译 `better-sqlite3`。
+需要 Git、Node.js 22 LTS（22.13 或更高的 22.x）和 npm。仓库统一使用 npm；不要混用 pnpm/yarn，也不要使用 Node.js 24。
+
+所有数据都可以留在本机，不需要云服务器、COS、域名或短信服务：
+
+- 用户、切片、评论、消息等结构化数据：`server/src/data/sidu.db`
+- 用户上传的头像、图片和实况照片：`server/uploads/`
+- 本地配置和密钥：`server/.env`（已被 Git 忽略）
+
+第一步，启动服务端：
 
 ```powershell
 git clone https://github.com/lvguicheniii/4du-FourCelsius.git
@@ -52,9 +60,9 @@ npm install
 npm run dev
 ```
 
-首次启动会使用账号 `noesis`，密码留空时在终端生成一次性随机密码；登录后立即修改。开发模式固定验证码为 `252616`，只可用于本机或隔离局域网测试。
+首次启动会自动创建 SQLite 数据库。管理后台地址是 `http://localhost:3001/admin/`，账号为 `noesis`，一次性随机密码会显示在第一次启动的终端里。注册时填写任意格式正确且未使用的 11 位手机号，固定验证码为 `252616`。这些默认值只可用于本机或隔离局域网测试。
 
-另开终端启动网页端：
+第二步，另开终端启动网页端：
 
 ```powershell
 cd community-web
@@ -63,15 +71,29 @@ npm install
 npm run dev
 ```
 
-网页地址通常是 `http://localhost:5173/community/`（端口被占用时以终端显示为准）。健康检查：`Invoke-WebRequest http://localhost:3001/api/health`，返回 200 即表示服务端正常。
+网页地址通常是 `http://localhost:5173/community/`（端口被占用时以终端显示为准）。执行 `Invoke-WebRequest http://localhost:3001/api/health`，返回 200 即表示服务端正常。
 
-手机预览 App：
+第三步，用手机预览 App：
 
-1. 安装 [Expo Go](https://expo.dev/go)（[Android 下载说明](https://docs.expo.dev/get-started/set-up-your-environment/)；iOS 从 App Store 搜索 Expo Go）。
-2. 在 `community-app/.env` 设置 `EXPO_PUBLIC_API_URL=http://电脑局域网IP:3001`，手机和电脑连接同一 Wi-Fi。
-3. 执行 `cd community-app; npm install; $env:APP_VARIANT='development'; npx expo start --go`，用 Expo Go 扫描终端二维码。开发预览会自动关闭 OTA 检查，避免 Expo Go 下载不存在的生产更新。
+1. 安装最新版 [Expo Go](https://expo.dev/go)（[Android 安装说明](https://docs.expo.dev/get-started/set-up-your-environment/)；iOS 从 App Store 搜索 Expo Go）。Expo Go 必须支持本项目的 Expo SDK 57。
+2. 手机和电脑连接同一 Wi-Fi；Windows 防火墙需允许 Node.js 访问专用网络。
+3. 在新终端执行：
 
-Android 模拟器使用 `http://10.0.2.2:3001`，不要在手机上使用 `localhost`。本地部署没有公网 HTTPS，不适合真实用户运营。
+```powershell
+cd 4du-FourCelsius/community-app
+Copy-Item .env.example .env
+npm install
+$env:APP_VARIANT='development'
+npx expo start --go --lan --clear
+```
+
+用 Expo Go 扫描二维码即可。App 会自动使用 Metro 公布的电脑局域网地址连接 `3001` 端口，无需手填 IP；开发预览也会自动关闭生产 OTA 和 React Compiler。
+
+如果使用 Android 模拟器，Metro 通常会自动提供 `10.0.2.2`。若网络结构特殊，可在 `community-app/.env` 中手动设置 `EXPO_PUBLIC_API_URL=http://电脑局域网IP:3001`，然后重启 Metro。出现 Expo Go 启动错误时，先更新 Expo Go，再执行 `npx expo-doctor@latest`；本项目正常结果应为全部检查通过。
+
+停止服务不会清除数据。备份时先停止服务端，再同时复制 `server/src/data/sidu.db` 和整个 `server/uploads/`；恢复时放回原位置。只备份数据库而不备份 `uploads/`，媒体记录会存在但文件会丢失。
+
+本地 HTTP 仅适合学习和局域网测试，不适合直接对公网提供服务。
 
 ### 方式三：云服务器部署（公网或生产环境）
 

@@ -1,4 +1,0 @@
-allowBuilds:
-  unrs-resolver: true
-overrides:
-  expo-modules-core: 57.0.14

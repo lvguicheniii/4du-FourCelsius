@@ -1,6 +1,5 @@
-const baseConfig = require('./app.json').expo;
-
-module.exports = () => {
+module.exports = ({ config }) => {
+  const baseConfig = config;
   const isDevelopment = process.env.APP_VARIANT === 'development';
   // The public local-preview path targets Expo Go. It must not include the
   // expo-dev-client launcher plugin, which is only for a custom dev build.
@@ -39,7 +38,10 @@ module.exports = () => {
     android: {
       ...baseConfig.android,
       package: isDevelopment ? 'com.fourcelsius.sidu.dev' : baseConfig.android.package,
-      usesCleartextTraffic: isDevelopment,
+    },
+    experiments: {
+      ...baseConfig.experiments,
+      reactCompiler: isDevelopment ? false : baseConfig.experiments?.reactCompiler,
     },
     plugins,
   };

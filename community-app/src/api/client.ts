@@ -3,11 +3,29 @@
 
 
 // 公网 IP 使用受信任的短期 TLS 证书；备案通过后再切回 https://your-web.example
+import Constants from 'expo-constants';
 import { getNetworkAwareError } from '@/lib/network-error';
 import { prepareImageForUpload, type UploadFileType, type UploadImagePreset } from '@/lib/upload-image';
 
-const configuredBaseUrl = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3001';
-export const BASE_URL = configuredBaseUrl.replace(/\/+$/, '');
+function inferLocalApiOrigin(configuredOrigin: string) {
+  const normalized = configuredOrigin.replace(/\/+$/, '');
+  const pointsAtThisDevice = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(normalized);
+  if (!__DEV__ || (normalized && !pointsAtThisDevice)) return normalized;
+
+  const hostUri = Constants.expoConfig?.hostUri;
+  if (!hostUri) return normalized || 'http://localhost:3001';
+  try {
+    const hostname = new URL(hostUri.includes('://') ? hostUri : `http://${hostUri}`).hostname;
+    // Tunnel hosts expose Metro only; they do not expose the local API port.
+    if (!hostname || hostname.endsWith('.exp.direct')) return normalized || 'http://localhost:3001';
+    return `http://${hostname}:3001`;
+  } catch {
+    return normalized || 'http://localhost:3001';
+  }
+}
+
+const configuredBaseUrl = String(process.env.EXPO_PUBLIC_API_URL || '').trim();
+export const BASE_URL = inferLocalApiOrigin(configuredBaseUrl);
 
 export function resolveApiUrl(path: string) {
   if (/^https?:\/\//i.test(path)) return path;

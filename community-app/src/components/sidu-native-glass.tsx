@@ -1,4 +1,4 @@
-import { requireNativeViewManager, requireOptionalNativeModule } from 'expo-modules-core';
+import { requireNativeView, requireOptionalNativeModule } from 'expo';
 import type { ComponentType } from 'react';
 import { Platform, type ViewProps } from 'react-native';
 
@@ -13,5 +13,5 @@ export type SiduNativeGlassSurfaceProps = ViewProps & {
 const hasNativeModule = Platform.OS === 'android' && requireOptionalNativeModule('SiduGlass') !== null;
 
 export const SiduNativeGlassSurface: ComponentType<SiduNativeGlassSurfaceProps> | null = hasNativeModule
-  ? requireNativeViewManager<SiduNativeGlassSurfaceProps>('SiduGlass', 'SiduGlassSurface')
+  ? requireNativeView<SiduNativeGlassSurfaceProps>('SiduGlass', 'SiduGlassSurface')
   : null;

@@ -1,8 +1,20 @@
 # 自托管部署
 
+## 0. 本地数据模式
+
+开发环境默认使用 SQLite 和本地文件存储，不依赖任何云产品：
+
+- 数据库：`server/src/data/sidu.db`
+- 媒体：`server/uploads/`
+- 临时处理文件：`server/tmp/`
+
+保持 `NODE_ENV=development` 且 COS 配置为空，上传内容会写入本机 `server/uploads/`。注册验证码可使用 `.env.example` 中的固定测试码。完整的本地启动命令见 `README.md`。
+
+备份前停止服务端，复制数据库和整个上传目录。恢复时保持相同相对路径再启动服务。SQLite 的 `-wal`/`-shm` 文件只应在服务停止后处理。
+
 ## 1. 准备服务器
 
-推荐 Ubuntu 22.04/24.04、Node.js 20+、SQLite、Nginx 和一个 HTTPS 域名。将仓库复制到服务器后：
+推荐 Ubuntu 22.04/24.04、Node.js 22 LTS、SQLite、Nginx 和一个 HTTPS 域名。将仓库复制到服务器后：
 
 ```bash
 cd 4du-FourCelsius/server
@@ -55,4 +67,4 @@ cd android
 ./gradlew assembleRelease
 ```
 
-生产签名、OTA 代码签名证书和密钥由部署者自行生成并安全保存。若不需要 OTA，可在 `app.json` 中关闭 `updates`。公开仓库中的默认配置只适用于本地开发。
+生产签名、OTA 代码签名证书和密钥由部署者自行生成并安全保存。若不需要 OTA，可在 `app.json` 中关闭 `updates`。本地 Expo Go 预览必须设置 `APP_VARIANT=development`，此模式会自动关闭 OTA。公开仓库中的默认配置只适用于本地开发。

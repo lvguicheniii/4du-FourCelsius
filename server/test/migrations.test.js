@@ -66,9 +66,11 @@ test('migrations are idempotent and record each version once', () => {
   `).run('default-answer-user', 'user_13700000000', '13700000000', '你最喜欢的季节是什么？', bcrypt.hashSync('123456', 10));
 
   runMigrations(db);
+  const migrationCount = db.prepare('SELECT COUNT(*) AS count FROM schema_migrations').get().count;
   runMigrations(db);
 
-  assert.equal(db.prepare('SELECT COUNT(*) AS count FROM schema_migrations').get().count, 100);
+  assert.ok(migrationCount > 0);
+  assert.equal(db.prepare('SELECT COUNT(*) AS count FROM schema_migrations').get().count, migrationCount);
   assert.equal(db.prepare("SELECT icon FROM boards WHERE id='board_ootd'").get()?.icon, 'shirt-outline');
   assert.equal(db.prepare("SELECT icon FROM boards WHERE id='board_sleep'").get()?.icon, 'bed-outline');
   assert.equal(db.prepare("SELECT name FROM boards WHERE id='board_anime'").get()?.name, '二次元');

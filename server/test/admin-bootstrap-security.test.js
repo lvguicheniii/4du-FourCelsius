@@ -8,6 +8,8 @@ const source = fs.readFileSync(path.join(__dirname, '..', 'src', 'index.js'), 'u
 test('server startup never creates a known default administrator', () => {
   assert.doesNotMatch(source, /ADMIN_BOOTSTRAP_USERNAME \|\| 'admin'/);
   assert.doesNotMatch(source, /admin123/);
+  assert.match(source, /const crypto = require\('node:crypto'\)/);
+  assert.match(source, /crypto\.randomBytes\(18\)/);
   assert.match(source, /bootstrapUsername\.length < 3/);
   assert.match(source, /bootstrapPassword\.length < 12/);
 });

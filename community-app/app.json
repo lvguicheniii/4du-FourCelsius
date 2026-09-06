@@ -41,7 +41,6 @@
         "android.permission.RECORD_AUDIO",
         "android.permission.READ_MEDIA_AUDIO"
       ],
-      "usesCleartextTraffic": false,
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
@@ -76,6 +75,8 @@
         }
       ],
       "expo-sharing",
+      "expo-image",
+      "expo-asset",
       [
         "expo-build-properties",
         {

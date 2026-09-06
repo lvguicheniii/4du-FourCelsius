@@ -13,7 +13,10 @@ const db = require('../src/db');
 const { reserveDailyUpload } = require('../src/lib/upload-quota');
 const { persistentRateLimit } = require('../src/middleware/persistent-rate-limit');
 
-test.after(() => fs.rmSync(testRoot, { recursive: true, force: true }));
+test.after(() => {
+  db.close();
+  fs.rmSync(testRoot, { recursive: true, force: true });
+});
 
 test('ordinary images are decoded and re-encoded without EXIF metadata', async () => {
   const input = path.join(testRoot, 'private-location.jpg');

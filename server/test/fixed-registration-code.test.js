@@ -9,6 +9,8 @@ const appLoginSource = fs.readFileSync(path.join(__dirname, '..', '..', 'communi
 const appAccountSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-app', 'src', 'app', 'account.tsx'), 'utf8');
 const webUiSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-web', 'src', 'ui.tsx'), 'utf8');
 const webScreensSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-web', 'src', 'screens.tsx'), 'utf8');
+const appConfigSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-app', 'app.config.js'), 'utf8');
+const appClientSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-app', 'src', 'api', 'client.ts'), 'utf8');
 
 function withVerificationEnvironment(values, callback) {
   const previous = {
@@ -70,4 +72,13 @@ test('registration, password reset and password change all bypass Tencent in fix
   assert.match(webUiSource, /api\.sendCode\(phone, "register"\)/);
   assert.match(webUiSource, /api\.sendCode\(phone, "password_reset"\)/);
   assert.match(webScreensSource, /api\.sendCode\(user\.phone, "password_change"\)/);
+});
+
+test('Expo Go local preview avoids production OTA and discovers the local API host', () => {
+  assert.match(appConfigSource, /updates: \{ \.\.\.baseConfig\.updates, enabled: !isDevelopment/);
+  assert.match(appConfigSource, /reactCompiler: isDevelopment \? false/);
+  assert.match(appConfigSource, /!== 'expo-dev-client'/);
+  assert.match(appClientSource, /Constants\.expoConfig\?\.hostUri/);
+  assert.match(appClientSource, /return `http:\/\/\$\{hostname\}:3001`/);
+  assert.match(appClientSource, /hostname\.endsWith\('\.exp\.direct'\)/);
 });

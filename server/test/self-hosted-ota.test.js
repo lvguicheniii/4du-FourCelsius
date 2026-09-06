@@ -31,7 +31,7 @@ test('client manifest uses only first-party immutable asset URLs', () => {
   const asset = { key: 'b'.repeat(64), hash: sha256Base64Url(Buffer.from('asset')), fileExtension: 'png' };
   const manifest = buildClientManifest({ id: '11111111-1111-4111-8111-111111111111', groupId: '22222222-2222-4222-8222-222222222222', channel: 'production', runtimeVersion: '1.0.5', versionName: 'DEV-046', createdAt: new Date().toISOString(), launchAsset: asset, assets: [asset] }, 'https://your-api.example');
   assert.equal(manifest.runtimeVersion, '1.0.5');
-  assert.match(manifest.launchAsset.url, /^https:\/\/175\.178\.40\.40\/api\/app-updates\/ota\/assets\/[a-f0-9]{64}$/);
+  assert.match(manifest.launchAsset.url, /^https:\/\/your-api\.example\/api\/app-updates\/ota\/assets\/[a-f0-9]{64}$/);
   assert.equal(manifest.extra.sidu.source, 'tencent-self-hosted');
 });
 

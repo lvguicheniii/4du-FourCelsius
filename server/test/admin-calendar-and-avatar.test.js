@@ -8,8 +8,8 @@ const adminHtml = fs.readFileSync(path.join(__dirname, '../src/public/admin/inde
 const pagesBuilder = fs.readFileSync(path.join(__dirname, '../scripts/build-admin-pages.mjs'), 'utf8');
 
 function loadCalendarNormalizer() {
-  const source = adminHtml.match(/function normalizedCalendarMonth\(year,month\)\{[\s\S]+?\}\nfunction renderThemeCalendar/)?.[0]
-    ?.replace(/\nfunction renderThemeCalendar$/, '');
+  const source = adminHtml.match(/function normalizedCalendarMonth\(year,month\)\{[\s\S]+?\}\r?\nfunction renderThemeCalendar/)?.[0]
+    ?.replace(/\r?\nfunction renderThemeCalendar$/, '');
   assert.ok(source, 'calendar month normalizer must exist');
   const context = {};
   vm.runInNewContext(`${source}; result = normalizedCalendarMonth;`, context);
