@@ -9,6 +9,7 @@ const appLoginSource = fs.readFileSync(path.join(__dirname, '..', '..', 'communi
 const appAccountSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-app', 'src', 'app', 'account.tsx'), 'utf8');
 const webUiSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-web', 'src', 'ui.tsx'), 'utf8');
 const webScreensSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-web', 'src', 'screens.tsx'), 'utf8');
+const webVerificationSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-web', 'src', 'verification-code.ts'), 'utf8');
 const appConfigSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-app', 'app.config.js'), 'utf8');
 const appClientSource = fs.readFileSync(path.join(__dirname, '..', '..', 'community-app', 'src', 'api', 'client.ts'), 'utf8');
 
@@ -69,9 +70,11 @@ test('registration, password reset and password change all bypass Tencent in fix
   assert.doesNotMatch(appAccountSource, /runTencentCaptcha/);
   assert.doesNotMatch(webUiSource, /runTencentCaptcha/);
   assert.doesNotMatch(webScreensSource, /runTencentCaptcha/);
-  assert.match(webUiSource, /api\.sendCode\(phone, "register"\)/);
-  assert.match(webUiSource, /api\.sendCode\(phone, "password_reset"\)/);
-  assert.match(webScreensSource, /api\.sendCode\(user\.phone, "password_change"\)/);
+  assert.match(webVerificationSource, /VITE_FIXED_VERIFICATION_CODE \|\| "252616"/);
+  assert.match(webUiSource, /setCode\(FIXED_VERIFICATION_CODE\)/);
+  assert.match(webScreensSource, /setVerifyCode\(FIXED_VERIFICATION_CODE\)/);
+  assert.doesNotMatch(webUiSource, /disabled=\{!phoneValid\}[^>]*>填入验证码/);
+  assert.doesNotMatch(webScreensSource, /disabled=\{!user\?\.phone\}[^>]*>填入验证码/);
 });
 
 test('Expo Go local preview avoids production OTA and discovers the local API host', () => {

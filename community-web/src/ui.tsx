@@ -17,6 +17,7 @@ import {
 import { api, uploadFile } from "./api";
 import { EMOJI_GROUPS } from "./emoji-data";
 import { useSession } from "./session";
+import { FIXED_VERIFICATION_CODE } from "./verification-code";
 import logoDay from "../../community-app/assets/images/logo_day.png";
 import logoNight from "../../community-app/assets/images/logo_night.png";
 
@@ -371,11 +372,11 @@ export function LoginModal({
           <label>密保问题<select value={securityQuestion} onChange={(e) => setSecurityQuestion(e.target.value)}><option value="">请选择密保问题</option>{securityQuestions.map((question) => <option key={question}>{question}</option>)}</select></label>
           {securityQuestion === "自定义问题" && <label>自定义密保问题<input maxLength={100} value={customQuestion} onChange={(e) => setCustomQuestion(e.target.value)} placeholder="请输入你的密保问题"/></label>}
           <label>密保答案<input maxLength={200} value={securityAnswer} onChange={(e) => setSecurityAnswer(e.target.value)} placeholder="密保问题答案"/></label>
-          <label className="auth-code">验证码<span><input inputMode="numeric" maxLength={6} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder="固定验证码 252616"/><button type="button" disabled={!phoneValid} onClick={async () => { setError(""); try { const result = await api.sendCode(phone, "register"); setCode(String(result.fixedCode || "252616")); } catch (e: any) { setError(e.message || "获取失败"); } }}>填入验证码</button></span></label>
+          <label className="auth-code">验证码<span><input inputMode="numeric" maxLength={6} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder={`固定验证码 ${FIXED_VERIFICATION_CODE}`}/><button type="button" onClick={() => { setError(""); setCode(FIXED_VERIFICATION_CODE); }}>填入验证码</button></span></label>
           <label className="auth-agreement"><input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)}/><span>我已阅读并同意 <button type="button" onClick={() => { history.pushState(null, "", `${import.meta.env.BASE_URL}legal/user-agreement`.replace(/\/{2,}/g, "/")); dispatchEvent(new PopStateEvent("popstate")); onClose(); }}>《用户协议》</button>和<button type="button" onClick={() => { history.pushState(null, "", `${import.meta.env.BASE_URL}legal/privacy-policy`.replace(/\/{2,}/g, "/")); dispatchEvent(new PopStateEvent("popstate")); onClose(); }}>《隐私政策》</button></span></label>
         </>}
         {mode !== "register" && <label className="auth-agreement"><input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)}/><span>我已阅读并同意 <button type="button" onClick={() => { history.pushState(null, "", `${import.meta.env.BASE_URL}legal/user-agreement`.replace(/\/{2,}/g, "/")); dispatchEvent(new PopStateEvent("popstate")); onClose(); }}>《用户协议》</button>和<button type="button" onClick={() => { history.pushState(null, "", `${import.meta.env.BASE_URL}legal/privacy-policy`.replace(/\/{2,}/g, "/")); dispatchEvent(new PopStateEvent("popstate")); onClose(); }}>《隐私政策》</button></span></label>}
-        {mode === "forgot" && <label className="auth-code">验证码<span><input inputMode="numeric" maxLength={6} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder="固定验证码 252616"/><button type="button" disabled={!phoneValid} onClick={async () => { setError(""); try { const result = await api.sendCode(phone, "password_reset"); setCode(String(result.fixedCode || "252616")); } catch (e: any) { setError(e.message || "获取失败"); } }}>填入验证码</button></span></label>}
+        {mode === "forgot" && <label className="auth-code">验证码<span><input inputMode="numeric" maxLength={6} value={code} onChange={(e) => setCode(e.target.value.replace(/\D/g, ""))} placeholder={`固定验证码 ${FIXED_VERIFICATION_CODE}`}/><button type="button" onClick={() => { setError(""); setCode(FIXED_VERIFICATION_CODE); }}>填入验证码</button></span></label>}
         {error && (
           <p className="error">
             <CircleAlert size={15} />
