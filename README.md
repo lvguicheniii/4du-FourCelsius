@@ -32,7 +32,7 @@
 
 ### 方式一：本地部署（学习和局域网测试）
 
-本地部署不需要云服务器。需要安装 Node.js 20+，服务端会使用本地 SQLite 数据库。
+本地部署不需要云服务器。需要安装 Git、Node.js 22 LTS（推荐 22.13+）和 pnpm 或 npm；服务端会使用本地 SQLite 数据库。Node.js 24 可能无法为 `better-sqlite3` 找到预编译包。
 
 #### 1. 启动服务端
 
@@ -43,7 +43,9 @@ npm install
 npm run dev
 ```
 
-服务端默认地址为 `http://localhost:3001`。本地隔离测试可以在 `.env` 中使用固定验证码；不要将固定验证码用于公网部署。
+编辑 `server/.env`，至少填写随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`，以及首次启动所需的 `ADMIN_BOOTSTRAP_USERNAME` 和 `ADMIN_BOOTSTRAP_PASSWORD`。管理员密码至少 12 位；首次成功创建管理员后，应删除这两个 `ADMIN_BOOTSTRAP_*` 变量并重启服务。服务端默认地址为 `http://localhost:3001`。
+
+本地隔离测试可以将 `ACCOUNT_VERIFICATION_MODE` 设为 `fixed` 并填写 `ACCOUNT_FIXED_CODE`；不要将固定验证码用于公网部署。未配置 COS 时，请按服务端当前配置使用本地媒体存储或关闭媒体功能。
 
 #### 2. 启动网页端
 
@@ -56,7 +58,7 @@ npm install
 npm run dev
 ```
 
-网页端默认地址为 `http://localhost:5173`。本机访问服务端时，`.env` 中的 `VITE_API_ORIGIN` 保持 `http://localhost:3001` 即可。
+网页端默认地址为 `http://localhost:5173/community/`。本机访问服务端时，`.env` 中的 `VITE_API_ORIGIN` 保持 `http://localhost:3001` 即可。若通过局域网访问网页端，将它改为运行服务端电脑的局域网地址，并同步调整服务端 `CORS_ORIGINS`。
 
 #### 3. 连接 App
 
@@ -75,6 +77,14 @@ npx expo start
 
 本地部署只能被本机或局域网设备访问，不提供公网 HTTPS，不适合真实用户运营。
 
+#### 4. 常见检查
+
+```powershell
+Invoke-WebRequest http://localhost:3001/api/health
+```
+
+返回 HTTP 200 且包含 `"status":"ok"` 即表示服务端正常。若手机无法连接，先确认电脑局域网 IP、Windows 防火墙、手机与电脑是否在同一 Wi-Fi，并确认 App 没有使用 `localhost`。
+
 ### 方式二：云服务器部署（公网或生产环境）
 
 推荐 Ubuntu 22.04/24.04、Node.js 20+、SQLite、Nginx 和 HTTPS 域名。基本流程如下：
@@ -87,7 +97,7 @@ npm ci --omit=dev
 npm start
 ```
 
-生产环境必须设置随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`，配置正确的 `CORS_ORIGINS`，关闭固定验证码，并通过 Nginx 或其他反向代理提供 HTTPS。网页端和 App 的 API 地址都应改为 HTTPS 域名。媒体存储、备份、推送和内容审核服务按实际需要配置，密钥只放在服务器环境变量中。
+生产环境必须设置随机的 `JWT_SECRET`、`ADMIN_JWT_SECRET`，首次启动前设置并妥善保存 `ADMIN_BOOTSTRAP_USERNAME` 和 `ADMIN_BOOTSTRAP_PASSWORD`，成功创建管理员后立即移除引导变量。配置正确的 `CORS_ORIGINS`，关闭固定验证码，并通过 Nginx 或其他反向代理提供 HTTPS。网页端和 App 的 API 地址都应改为 HTTPS 域名。媒体存储、备份、推送和内容审核服务按实际需要配置，密钥只放在服务器环境变量中。
 
 完整的 Nginx、进程守护、数据库备份和 App 构建说明请阅读 [`DEPLOYMENT.md`](./DEPLOYMENT.md)。域名、凭据、COS 桶名和证书均由部署者自行配置，仓库不包含任何生产数据或密钥。
 
