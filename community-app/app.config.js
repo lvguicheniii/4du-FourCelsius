@@ -2,8 +2,10 @@ const baseConfig = require('./app.json').expo;
 
 module.exports = () => {
   const isDevelopment = process.env.APP_VARIANT === 'development';
+  // The public local-preview path targets Expo Go. It must not include the
+  // expo-dev-client launcher plugin, which is only for a custom dev build.
   const plugins = baseConfig.plugins
-    .filter((plugin) => isDevelopment || (Array.isArray(plugin) ? plugin[0] : plugin) !== 'expo-dev-client')
+    .filter((plugin) => (Array.isArray(plugin) ? plugin[0] : plugin) !== 'expo-dev-client')
     .map((plugin) => {
     if (!Array.isArray(plugin) || plugin[0] !== 'expo-build-properties') return plugin;
     return [
