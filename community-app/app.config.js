@@ -25,7 +25,9 @@ module.exports = () => {
   const apiOrigin = String(process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3001').replace(/\/$/, '');
   return {
     ...baseConfig,
-    updates: { ...baseConfig.updates, url: `${apiOrigin}/api/app-updates/ota` },
+    // Expo Go cannot consume the self-hosted production OTA endpoint during
+    // local preview. Keep updates enabled for release builds only.
+    updates: { ...baseConfig.updates, enabled: !isDevelopment, url: `${apiOrigin}/api/app-updates/ota` },
     name: isDevelopment ? '肆度 Dev' : baseConfig.name,
     scheme: isDevelopment ? 'communityapp-dev' : baseConfig.scheme,
     ios: {

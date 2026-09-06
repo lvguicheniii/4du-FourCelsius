@@ -69,7 +69,7 @@ npm run dev
 
 1. 安装 [Expo Go](https://expo.dev/go)（[Android 下载说明](https://docs.expo.dev/get-started/set-up-your-environment/)；iOS 从 App Store 搜索 Expo Go）。
 2. 在 `community-app/.env` 设置 `EXPO_PUBLIC_API_URL=http://电脑局域网IP:3001`，手机和电脑连接同一 Wi-Fi。
-3. 执行 `cd community-app; npm install; npx expo start`，用 Expo Go 扫描终端二维码；若终端处于 development build 模式，按 `s` 切换到 Expo Go。
+3. 执行 `cd community-app; npm install; $env:APP_VARIANT='development'; npx expo start --go`，用 Expo Go 扫描终端二维码。开发预览会自动关闭 OTA 检查，避免 Expo Go 下载不存在的生产更新。
 
 Android 模拟器使用 `http://10.0.2.2:3001`，不要在手机上使用 `localhost`。本地部署没有公网 HTTPS，不适合真实用户运营。
 
