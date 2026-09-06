@@ -1,6 +1,7 @@
 # 4du-FourCelsius
 
-肆度（Four Celsius）是一个开源社区项目，包含 Expo/React Native App、React 网页端和 Node.js 服务端。项目用于学习、研究和自托管部署。
+肆度（Four Celsius）是一个开源社交项目，包含 Expo/React Native App、React 网页端和 Node.js 服务端。项目用于学习、研究和自托管部署。
+B站介绍视频：https://www.bilibili.com/video/BV1UZbx68Evt/?vd_source=ac5de2e5a853c45c213e48312133d7da
 
 ## APP 端
 
